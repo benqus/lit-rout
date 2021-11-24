@@ -6,33 +6,15 @@ var $6XtLq$litdecorators = require("lit/decorators");
 function $parcel$export(e, n, v, s) {
   Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
 }
-function $parcel$exportWildcard(dest, source) {
-  Object.keys(source).forEach(function(key) {
-    if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) {
-      return;
-    }
-
-    Object.defineProperty(dest, key, {
-      enumerable: true,
-      get: function get() {
-        return source[key];
-      }
-    });
-  });
-
-  return dest;
-}
 
 $parcel$export(module.exports, "getRoute", () => $b5491a78640485e3$export$da6d2f7032b7150b);
 $parcel$export(module.exports, "getRouteParams", () => $b5491a78640485e3$export$b9a4691d132f3891);
 $parcel$export(module.exports, "LitRoutElement", () => $b5491a78640485e3$export$55adbf57677534be);
+$parcel$export(module.exports, "RoutedLitElement", () => $5f3ae126e0b38295$export$677fad44b501687e);
 
 
 
 
-var $5f3ae126e0b38295$exports = {};
-
-$parcel$export($5f3ae126e0b38295$exports, "RoutedLitElement", () => $5f3ae126e0b38295$export$677fad44b501687e);
 
 class $5f3ae126e0b38295$export$677fad44b501687e extends $6XtLq$lit.LitElement {
     /**
@@ -119,6 +101,5 @@ let $b5491a78640485e3$export$55adbf57677534be = _class = _dec1((_class = class L
     writable: true,
     initializer: void 0
 }), _class)) || _class;
-$parcel$exportWildcard(module.exports, $5f3ae126e0b38295$exports);
 
 

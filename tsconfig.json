@@ -9,5 +9,6 @@
     "esModuleInterop": true,
     "downlevelIteration": true
   },
+  "include": ["lib/**/*"],
   "exclude": ["node_modules"]
 }

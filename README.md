@@ -1,13 +1,13 @@
 # lit-rout
 
-> **Please note:** This is a draft just yet - will only support one matchhing route at present moment
+> **Please note:** This is a draft just yet - will only support one matching route at present moment
 
 Conditional but declarative rendering based on the Location.
 
 ## Concept
 
-- 1. `lit-rout` component
-- 1. A custom Component extended from `lit-rout/RoutedLitComponent`
+1. `lit-rout` component
+1. A custom Component extended from `lit-rout/RoutedLitComponent`
 
 Check out [https://www.npmjs.com/package/path-to-regexp#match](https://www.npmjs.com/package/path-to-regexp#match) about how to use route matching
 
@@ -83,5 +83,7 @@ export class MyPage extends RoutedLitElement {
 Please bear in mind that `RoutedLitElement`s are always rendered, its their children that are de/attached (dis/connected) from the DOM so any lifecycle related logic should go into those components.
 
 ### Extra
+
+Parcel-TypeScript related [issue](https://github.com/parcel-bundler/parcel/issues/7325) that locks version to `typescript@4.3.5` for now.
 
 In the future, when it's available, it would be awesome to use the [URLPattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API)

@@ -6,7 +6,7 @@ import { RoutedLitElement } from './RoutedLitElement';
 
 let _currentRoute: LitRoutElement = null;
 
-export * from './RoutedLitElement';
+export { RoutedLitElement } from './RoutedLitElement';
 
 export function getRoute(): LitRoutElement {
   return _currentRoute;
