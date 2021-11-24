@@ -1,10 +1,14 @@
 {
   "name": "lit-rout",
-  "version": "0.0.1",
-  "description": "Experiment with minimal, declarative Lit routing",
-  "main": "index.ts",
+  "version": "0.0.2",
+  "description": "Minimal, declarative Lit/WC routing",
+  "main": "./build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "yarn test && yarn parcel",
+    "lint": "eslint \"./lib/**/*.ts\"",
+    "parcel": "parcel build ./lib/index.ts --dist-dir dist --log-level info --no-cache --no-source-maps --detailed-report 10",
+    "postinstall": "husky install",
+    "test": "yarn lint"
   },
   "repository": {
     "type": "git",
@@ -21,7 +25,20 @@
   },
   "homepage": "https://github.com/benqus/lit-rout#readme",
   "dependencies": {
+    "@swc/helpers": "^0.2.14",
     "lit": "^2.0.2",
     "path-to-regexp": "^6.2.0"
+  },
+  "devDependencies": {
+    "@parcel/reporter-bundle-analyzer": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "parcel": "^2.0.1",
+    "prettier": "^2.4.1",
+    "typescript": "^4.5.2"
   }
 }
