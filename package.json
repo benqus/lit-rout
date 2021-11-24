@@ -1,0 +1,27 @@
+{
+  "name": "lit-rout",
+  "version": "0.0.1",
+  "description": "Experiment with minimal, declarative Lit routing",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benqus/lit-rout.git"
+  },
+  "keywords": [
+    "lit",
+    "routing"
+  ],
+  "author": "Bence Kormos <ben.kormos@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benqus/lit-rout/issues"
+  },
+  "homepage": "https://github.com/benqus/lit-rout#readme",
+  "dependencies": {
+    "lit": "^2.0.2",
+    "path-to-regexp": "^6.2.0"
+  }
+}

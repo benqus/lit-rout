@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "experimentalDecorators": true,
+    "allowJs": false,
+    "target": "ES6",
+    "lib": ["ESNext", "DOM"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true
+  },
+  "exclude": ["node_modules"]
+}
