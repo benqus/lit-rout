@@ -9,39 +9,38 @@ import {customElement as $21Pif$customElement, property as $21Pif$property} from
 
 
 class $b9283377b48b63e8$export$677fad44b501687e extends $21Pif$LitElement {
+    get params() {
+        return this.parentElement.result?.params;
+    }
     /**
    * Don't override this
    */ render() {
-        return this.visible ? this.renderTemplate() : null;
+        return this.parentElement.visible ? this.renderTemplate() : null;
     }
     /**
    * Override this function to render template when route is visible
    */ renderTemplate() {
         return null;
     }
-    constructor(...args){
-        super(...args);
-        this.visible = false;
-    }
 }
-
 
 
 var _class, _descriptor, _dec;
-let $eb7a7ac02431551a$var$_currentRoute = null;
-function $eb7a7ac02431551a$export$da6d2f7032b7150b() {
-    return $eb7a7ac02431551a$var$_currentRoute;
-}
-function $eb7a7ac02431551a$export$b9a4691d132f3891() {
-    return $eb7a7ac02431551a$export$da6d2f7032b7150b().result.params;
-}
+const $1f39a55ce7d31fcf$var$_visibleLitRoutElements = new Set();
 var _dec1 = $21Pif$customElement('lit-rout');
-let $eb7a7ac02431551a$export$55adbf57677534be = _class = _dec1((_class = class LitRoutElement extends $21Pif$LitElement {
+let $1f39a55ce7d31fcf$export$55adbf57677534be = _class = _dec1((_class = class LitRoutElement extends $21Pif$LitElement {
     get result() {
-        return this._matchResult || null;
+        return this._matchResult;
+    }
+    set result(matchResult) {
+        this._matchResult = matchResult || null;
+        $1f39a55ce7d31fcf$var$_visibleLitRoutElements[this._matchResult ? 'add' : 'delete'](this);
     }
     get visible() {
-        return $eb7a7ac02431551a$export$da6d2f7032b7150b() === this;
+        return $1f39a55ce7d31fcf$var$_visibleLitRoutElements.has(this);
+    }
+    _updateMatcher() {
+        this._match = $21Pif$match(this.route);
     }
     createRenderRoot() {
         return this;
@@ -50,37 +49,33 @@ let $eb7a7ac02431551a$export$55adbf57677534be = _class = _dec1((_class = class L
         super.connectedCallback();
         window.addEventListener('popstate', this._onPopstateChange);
     }
+    attributeChangedCallback(name, _old, _new) {
+        super.attributeChangedCallback(name, _old, _new);
+        name === 'route' && this._updateMatcher();
+    }
     disconnectedCallback() {
         super.connectedCallback();
         window.removeEventListener('popstate', ()=>{
-            this._matchResult = false;
+            this.result = false;
             this._onPopstateChange();
-            $eb7a7ac02431551a$var$_currentRoute = this.visible ? null : $eb7a7ac02431551a$var$_currentRoute;
         });
     }
     shouldUpdate() {
         return !!this.route && this.isConnected;
     }
     willUpdate() {
-        const matcher = $21Pif$match(this.route);
-        this._matchResult = matcher(location.pathname);
-        $eb7a7ac02431551a$var$_currentRoute = this.result ? this : $eb7a7ac02431551a$var$_currentRoute;
+        this.result = this._match(location.pathname);
     }
     updated() {
         for(let i = 0; i < this.children.length; i++){
             const routedLitElement = this.children[i];
-            if (routedLitElement instanceof $b9283377b48b63e8$export$677fad44b501687e) {
-                routedLitElement.visible = this.visible;
-                routedLitElement.requestUpdate();
-            }
+            if (routedLitElement instanceof $b9283377b48b63e8$export$677fad44b501687e) routedLitElement.requestUpdate();
         }
     }
     constructor(...args){
         super(...args);
-        this._onPopstateChange = ()=>{
-            $eb7a7ac02431551a$var$_currentRoute = null;
-            this.requestUpdate();
-        };
+        this._onPopstateChange = ()=>this.requestUpdate()
+        ;
         $21Pif$initializerDefineProperty(this, "route", _descriptor, this);
     }
 }, _dec = $21Pif$property({
@@ -95,4 +90,10 @@ let $eb7a7ac02431551a$export$55adbf57677534be = _class = _dec1((_class = class L
 }), _class)) || _class;
 
 
-export {$eb7a7ac02431551a$export$da6d2f7032b7150b as getRoute, $eb7a7ac02431551a$export$b9a4691d132f3891 as getRouteParams, $eb7a7ac02431551a$export$55adbf57677534be as LitRoutElement, $b9283377b48b63e8$export$677fad44b501687e as RoutedLitElement};
+
+var $9fba5ed13fbeafbe$exports = {};
+
+
+
+
+export {$1f39a55ce7d31fcf$export$55adbf57677534be as LitRoutElement, $b9283377b48b63e8$export$677fad44b501687e as RoutedLitElement};

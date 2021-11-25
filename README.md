@@ -1,13 +1,13 @@
 # lit-rout
 
-> **Please note:** This is a draft just yet - will only support one matching route at present moment
+> **Please note:** still a draft
 
-Conditional but declarative rendering based on the Location.
+Declarative, conditional rendering based on the Location for [Lit](https://lit.dev/) applications.
 
-## Concept
+## Parts
 
-1. `lit-rout` component
-1. A custom Component extended from `lit-rout/RoutedLitComponent`
+1. A `lit-rout` custom component registered by the library
+1. A custom component extended from `lit-rout/RoutedLitComponent` registered by the application
 
 Check out [https://www.npmjs.com/package/path-to-regexp#match](https://www.npmjs.com/package/path-to-regexp#match) about how to use route matching
 
@@ -24,14 +24,17 @@ HTML Template
     <my-page></my-page><!-- extends RoutedLitElement -->
     <h3>I'm always rendered</h3><!-- not a RoutedLitElement so updates for this are ignored -->
   </lit-rout>
+  <lit-rout route="/page/:id">
+    <my-page-with-route-params></my-page-with-route-params><!-- extends RoutedLitElement -->
+  </lit-rout>
 </my-app>
 ```
 
 Custom `RoutedLitElement`
 
 ```ts
-import { RoutedLitElement } from 'lit';
 import { customElement } from 'lit/decorators';
+import { RoutedLitElement } from 'lit-rout';
 
 @customElement('my-dashboard')
 export class MyDashboard extends RoutedLitElement {
@@ -46,13 +49,20 @@ export class MyPage extends RoutedLitElement {
     return html`<h2>Page</h2>`;
   }
 }
+
+@customElement('my-page-with-route-params')
+export class MyPage extends RoutedLitElement {
+  renderTemplate() {
+    return html`<h2>Page ${this.params.id}</h2>`;
+  }
+}
 ```
 
 ## About the components/API
 
 Quick guide to the basic building blocks
 
-### `lit-rout`
+### `lit-rout` Custom Component
 
 ```html
 <lit-rout route="/path/to/success"><!-- content --></lit-rout>
@@ -64,17 +74,15 @@ This component will set the `visible` property on its child Elements. You will h
 
 Can have multiple `RoutedLitElement`s if needed.
 
-### `RoutedLitElement`
+### `RoutedLitElement` Class
 
-Just like a standard `LitElement`, expect you have to implement the `renderTemplate` method to return the HTML template.
+Just like a standard `LitElement`, except (instead of the `render` method) you have to **implement the `renderTemplate` method** to return the HTML template.
 
 ```ts
-import { getRouteParams } from 'lit-rout';
-
 @customElement('routed-layout')
 export class MyPage extends RoutedLitElement {
   renderTemplate() {
-    const params = getRouteParams(); // retrieve parameters from the URL
+    const params = this.params // access the matched parameters from the URL - within the container lit-rout element !!!
     return html`<h2>A Custom Layout</h2`;
   }
 }

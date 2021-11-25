@@ -1,13 +1,20 @@
 import { LitElement, TemplateResult } from 'lit';
+import { MatchResult } from 'path-to-regexp';
 
-export class RoutedLitElement extends LitElement {
-  public visible = false;
+import { IRoutedLitElement, ILitRoutElement } from './types';
+
+export class RoutedLitElement extends LitElement implements IRoutedLitElement {
+  public get params(): MatchResult['params'] | null {
+    return (this.parentElement as ILitRoutElement).result?.params;
+  }
 
   /**
    * Don't override this
    */
   render(): TemplateResult {
-    return this.visible ? this.renderTemplate() : null;
+    return (this.parentElement as ILitRoutElement).visible
+      ? this.renderTemplate()
+      : null;
   }
 
   /**

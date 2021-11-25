@@ -1,7 +1,16 @@
-import { LitElement, TemplateResult } from "lit";
+import { TemplateResult, LitElement } from "lit";
 import { MatchResult } from "path-to-regexp";
-export class RoutedLitElement extends LitElement {
+export interface ILitRoutElement extends LitElement {
+    route: string;
     visible: boolean;
+    result: MatchResult | null;
+}
+export interface IRoutedLitElement extends LitElement {
+    params: MatchResult['params'] | null;
+    renderTemplate(): TemplateResult;
+}
+export class RoutedLitElement extends LitElement implements IRoutedLitElement {
+    get params(): MatchResult['params'] | null;
     /**
      * Don't override this
      */
@@ -11,14 +20,14 @@ export class RoutedLitElement extends LitElement {
      */
     renderTemplate(): TemplateResult;
 }
-export function getRoute(): LitRoutElement;
-export function getRouteParams(): MatchResult['params'];
-export class LitRoutElement extends LitElement {
-    route: string;
+export class LitRoutElement extends LitElement implements ILitRoutElement {
     get result(): MatchResult | null;
+    private set result(value);
     get visible(): boolean;
+    route: string;
     createRenderRoot(): this;
     connectedCallback(): void;
+    attributeChangedCallback(name: string, _old: string, _new: string): void;
     disconnectedCallback(): void;
     shouldUpdate(): boolean;
     willUpdate(): void;

@@ -1,0 +1,13 @@
+.husky/
+.parcel-cache/
+lib/
+parcel-bundle-reports/
+
+.editorconfig
+.eslintignore
+.eslintrc
+.parcelrc
+.prettierignore
+.prettierrc
+
+tsconfig.json

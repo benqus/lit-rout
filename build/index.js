@@ -6,10 +6,24 @@ var $6XtLq$litdecorators = require("lit/decorators");
 function $parcel$export(e, n, v, s) {
   Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
 }
+function $parcel$exportWildcard(dest, source) {
+  Object.keys(source).forEach(function(key) {
+    if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) {
+      return;
+    }
 
-$parcel$export(module.exports, "getRoute", () => $b5491a78640485e3$export$da6d2f7032b7150b);
-$parcel$export(module.exports, "getRouteParams", () => $b5491a78640485e3$export$b9a4691d132f3891);
-$parcel$export(module.exports, "LitRoutElement", () => $b5491a78640485e3$export$55adbf57677534be);
+    Object.defineProperty(dest, key, {
+      enumerable: true,
+      get: function get() {
+        return source[key];
+      }
+    });
+  });
+
+  return dest;
+}
+
+$parcel$export(module.exports, "LitRoutElement", () => $e8b057911b7e1cb4$export$55adbf57677534be);
 $parcel$export(module.exports, "RoutedLitElement", () => $5f3ae126e0b38295$export$677fad44b501687e);
 
 
@@ -17,39 +31,38 @@ $parcel$export(module.exports, "RoutedLitElement", () => $5f3ae126e0b38295$expor
 
 
 class $5f3ae126e0b38295$export$677fad44b501687e extends $6XtLq$lit.LitElement {
+    get params() {
+        return this.parentElement.result?.params;
+    }
     /**
    * Don't override this
    */ render() {
-        return this.visible ? this.renderTemplate() : null;
+        return this.parentElement.visible ? this.renderTemplate() : null;
     }
     /**
    * Override this function to render template when route is visible
    */ renderTemplate() {
         return null;
     }
-    constructor(...args){
-        super(...args);
-        this.visible = false;
-    }
 }
-
 
 
 var _class, _descriptor, _dec;
-let $b5491a78640485e3$var$_currentRoute = null;
-function $b5491a78640485e3$export$da6d2f7032b7150b() {
-    return $b5491a78640485e3$var$_currentRoute;
-}
-function $b5491a78640485e3$export$b9a4691d132f3891() {
-    return $b5491a78640485e3$export$da6d2f7032b7150b().result.params;
-}
+const $e8b057911b7e1cb4$var$_visibleLitRoutElements = new Set();
 var _dec1 = $6XtLq$litdecorators.customElement('lit-rout');
-let $b5491a78640485e3$export$55adbf57677534be = _class = _dec1((_class = class LitRoutElement extends $6XtLq$lit.LitElement {
+let $e8b057911b7e1cb4$export$55adbf57677534be = _class = _dec1((_class = class LitRoutElement extends $6XtLq$lit.LitElement {
     get result() {
-        return this._matchResult || null;
+        return this._matchResult;
+    }
+    set result(matchResult) {
+        this._matchResult = matchResult || null;
+        $e8b057911b7e1cb4$var$_visibleLitRoutElements[this._matchResult ? 'add' : 'delete'](this);
     }
     get visible() {
-        return $b5491a78640485e3$export$da6d2f7032b7150b() === this;
+        return $e8b057911b7e1cb4$var$_visibleLitRoutElements.has(this);
+    }
+    _updateMatcher() {
+        this._match = $6XtLq$pathtoregexp.match(this.route);
     }
     createRenderRoot() {
         return this;
@@ -58,37 +71,33 @@ let $b5491a78640485e3$export$55adbf57677534be = _class = _dec1((_class = class L
         super.connectedCallback();
         window.addEventListener('popstate', this._onPopstateChange);
     }
+    attributeChangedCallback(name, _old, _new) {
+        super.attributeChangedCallback(name, _old, _new);
+        name === 'route' && this._updateMatcher();
+    }
     disconnectedCallback() {
         super.connectedCallback();
         window.removeEventListener('popstate', ()=>{
-            this._matchResult = false;
+            this.result = false;
             this._onPopstateChange();
-            $b5491a78640485e3$var$_currentRoute = this.visible ? null : $b5491a78640485e3$var$_currentRoute;
         });
     }
     shouldUpdate() {
         return !!this.route && this.isConnected;
     }
     willUpdate() {
-        const matcher = $6XtLq$pathtoregexp.match(this.route);
-        this._matchResult = matcher(location.pathname);
-        $b5491a78640485e3$var$_currentRoute = this.result ? this : $b5491a78640485e3$var$_currentRoute;
+        this.result = this._match(location.pathname);
     }
     updated() {
         for(let i = 0; i < this.children.length; i++){
             const routedLitElement = this.children[i];
-            if (routedLitElement instanceof $5f3ae126e0b38295$export$677fad44b501687e) {
-                routedLitElement.visible = this.visible;
-                routedLitElement.requestUpdate();
-            }
+            if (routedLitElement instanceof $5f3ae126e0b38295$export$677fad44b501687e) routedLitElement.requestUpdate();
         }
     }
     constructor(...args){
         super(...args);
-        this._onPopstateChange = ()=>{
-            $b5491a78640485e3$var$_currentRoute = null;
-            this.requestUpdate();
-        };
+        this._onPopstateChange = ()=>this.requestUpdate()
+        ;
         $6XtLq$swchelpers.initializerDefineProperty(this, "route", _descriptor, this);
     }
 }, _dec = $6XtLq$litdecorators.property({
@@ -101,5 +110,12 @@ let $b5491a78640485e3$export$55adbf57677534be = _class = _dec1((_class = class L
     writable: true,
     initializer: void 0
 }), _class)) || _class;
+
+
+
+var $61fa6e94e3dac45b$exports = {};
+
+
+$parcel$exportWildcard(module.exports, $61fa6e94e3dac45b$exports);
 
 
