@@ -1,16 +1,17 @@
 import { TemplateResult, LitElement } from "lit";
 import { MatchResult } from "path-to-regexp";
-export interface ILitRoutElement extends LitElement {
+interface ILitRoutElement extends LitElement {
     route: string;
+    routeAsParent: string;
     visible: boolean;
     result: MatchResult | null;
 }
-export interface IRoutedLitElement extends LitElement {
-    params: MatchResult['params'] | null;
+interface IRoutedLitElement<T extends object> extends LitElement {
+    params: T | null;
     renderTemplate(): TemplateResult;
 }
-export class RoutedLitElement extends LitElement implements IRoutedLitElement {
-    get params(): MatchResult['params'] | null;
+export class RoutedLitElement<T extends object> extends LitElement implements IRoutedLitElement<T> {
+    get params(): T | null;
     /**
      * Don't override this
      */
@@ -24,6 +25,7 @@ export class LitRoutElement extends LitElement implements ILitRoutElement {
     get result(): MatchResult | null;
     private set result(value);
     get visible(): boolean;
+    get routeAsParent(): string;
     route: string;
     createRenderRoot(): this;
     connectedCallback(): void;

@@ -18,14 +18,25 @@ HTML Template
 ```html
 <my-app>
   <lit-rout route="/">
-    <my-dashboard></my-dashboard><!-- extends RoutedLitElement -->
+
+    <!-- Custom Component that extends from lit-rout/RoutedLitElement -->
+    <my-dashboard></my-dashboard>
+    
+    <!-- not a RoutedLitElement so updates for this are ignored -->
+    <h3>I'm always rendered</h3>
+    
   </lit-rout>
-  <lit-rout route="/page">
-    <my-page></my-page><!-- extends RoutedLitElement -->
-    <h3>I'm always rendered</h3><!-- not a RoutedLitElement so updates for this are ignored -->
-  </lit-rout>
-  <lit-rout route="/page/:id">
-    <my-page-with-route-params></my-page-with-route-params><!-- extends RoutedLitElement -->
+
+  <!-- nesting routes, "(.*)" signifies nesting. Required because routes are strictly matched -->
+  <lit-rout route="/page(.*)">
+
+    <my-page></my-page>
+    
+    <!-- nested route, will inherit all parent routes wihtout "(.*)" -->
+    <lit-rout route="/:id">
+      <my-page-with-route-params></my-page-with-route-params>
+    </lit-rout>
+
   </lit-rout>
 </my-app>
 ```
@@ -37,21 +48,21 @@ import { customElement } from 'lit/decorators';
 import { RoutedLitElement } from 'lit-rout';
 
 @customElement('my-dashboard')
-export class MyDashboard extends RoutedLitElement {
+export class MyDashboard extends RoutedLitElement<{}> {
   renderTemplate() {
     return html`<h2>Dashboard</h2`;
   }
 }
 
 @customElement('my-page')
-export class MyPage extends RoutedLitElement {
+export class MyPage extends RoutedLitElement<{}> {
   renderTemplate() {
     return html`<h2>Page</h2>`;
   }
 }
 
 @customElement('my-page-with-route-params')
-export class MyPage extends RoutedLitElement {
+export class MyPage extends RoutedLitElement<{ id: string }> {
   renderTemplate() {
     return html`<h2>Page ${this.params.id}</h2>`;
   }
@@ -76,14 +87,22 @@ Can have multiple `RoutedLitElement`s if needed.
 
 ### `RoutedLitElement` Class
 
-Just like a standard `LitElement`, except (instead of the `render` method) you have to **implement the `renderTemplate` method** to return the HTML template.
+Just like a standard `LitElement` but:
+
+- (instead of the `render` method) you have to **implement the `renderTemplate` method** to return the HTML template,
+- class is generic, type is the interface/type describing the route params object
 
 ```ts
-@customElement('routed-layout')
-export class MyPage extends RoutedLitElement {
+interface MyPageParams {
+  id: string;
+  title: string;
+}
+
+@customElement('my-page')
+export class MyPage extends RoutedLitElement<MyPageParams> {
   renderTemplate() {
-    const params = this.params // access the matched parameters from the URL - within the container lit-rout element !!!
-    return html`<h2>A Custom Layout</h2`;
+    const { id, title } = this.params // access the matched parameters from the URL - within the container lit-rout element !!!
+    return html`<h2>My Page: ${name}/${id}</h2`;
   }
 }
 ```

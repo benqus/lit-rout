@@ -1,6 +1,6 @@
 {
   "name": "lit-rout",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Declarative, conditional rendering based on the Location for Lit applications",
   "source": "./lib/index.ts",
   "main": "./build/index.js",
