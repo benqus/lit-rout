@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "AMD",
+    "moduleResolution": "Node",
     "experimentalDecorators": true,
-    "allowJs": false,
     "target": "ES6",
     "lib": ["ESNext", "DOM"],
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "useDefineForClassFields": false
   },
   "include": ["lib/**/*"],
   "exclude": ["node_modules"]
